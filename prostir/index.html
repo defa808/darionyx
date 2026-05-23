@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prostir — Shared Household Budget</title>
+  <meta name="description" content="Prostir connects to your Ukrainian bank accounts, tracks spending automatically, and keeps both partners in sync — all in one place." />
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #eff6ff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--white);
+      color: var(--text);
+    }
+
+    /* Nav */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo {
+      width: 36px;
+      height: 36px;
+      background: var(--primary);
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    /* Hero */
+    .hero {
+      text-align: center;
+      padding: 72px 24px 56px;
+      background: linear-gradient(160deg, #eff6ff 0%, #ffffff 60%);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.15;
+      color: var(--text);
+      max-width: 580px;
+      margin: 0 auto 16px;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      font-size: 17px;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.65;
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--primary-dark); }
+
+    .btn-outline {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      padding: 11px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.2s;
+    }
+
+    .btn-outline:hover { background: var(--primary-light); }
+
+    /* How it works */
+    .section {
+      max-width: 900px;
+      margin: 64px auto;
+      padding: 0 24px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 40px;
+      color: var(--text);
+    }
+
+    /* Steps */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 28px;
+      counter-reset: steps;
+    }
+
+    .step {
+      counter-increment: steps;
+      position: relative;
+      padding-left: 0;
+    }
+
+    .step-num {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 14px;
+    }
+
+    .step h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Features grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+
+    .feature-icon {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Banks */
+    .banks {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .banks p {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .bank-badges {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .bank-badge {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    /* Legal footer links */
+    .legal-links {
+      max-width: 900px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .legal-links a {
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 16px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      background: var(--bg);
+    }
+
+    .legal-links a:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+      background: var(--white);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      margin: 0 6px;
+    }
+
+    @media (max-width: 560px) {
+      .hero h1 { font-size: 28px; }
+      .hero p { font-size: 15px; }
+      .section h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a href="/darionyx/" class="nav-brand">
+    <div class="logo">П</div>
+    <span class="brand-name">Prostir</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="https://play.google.com/store/apps/details?id=com.darionyx.prostir" class="btn-primary" style="padding: 8px 18px; font-size: 14px;">Get the App</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-badge">Available on Android &amp; Web</div>
+  <h1>Your shared household budget, <span>simplified</span></h1>
+  <p>
+    Prostir connects to your Ukrainian bank accounts, tracks spending automatically,
+    and keeps both partners in sync — all in one place.
+  </p>
+  <div class="cta-group">
+    <a href="https://play.google.com/store/apps/details?id=com.darionyx.prostir" class="btn-primary">
+      ▶ Get on Google Play
+    </a>
+    <a href="#features" class="btn-outline">See Features</a>
+  </div>
+</section>
+
+<!-- Banks -->
+<div class="banks">
+  <p>Works with your bank</p>
+  <div class="bank-badges">
+    <div class="bank-badge">🏦 Monobank</div>
+    <div class="bank-badge">🏦 PrivatBank</div>
+  </div>
+</div>
+
+<!-- How it works -->
+<div class="section">
+  <p class="section-label">How it works</p>
+  <h2>Up and running in minutes</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Sign in with Google</h3>
+      <p>No passwords. One tap sign-in with your existing Google account.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Invite your partner</h3>
+      <p>Create a household and share an invite link with your partner.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Link your bank accounts</h3>
+      <p>Connect Monobank or PrivatBank. Transactions import automatically.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Set your budget plan</h3>
+      <p>Define monthly budgets per category and watch your dashboard come to life.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+<div class="section" id="features">
+  <p class="section-label">Features</p>
+  <h2>Everything you need to manage money together</h2>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🔄</div>
+      <h3>Automatic Bank Sync</h3>
+      <p>Transactions from Monobank arrive in real time via webhooks. PrivatBank syncs daily.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👫</div>
+      <h3>Built for Couples</h3>
+      <p>Both partners see the same dashboard. Per-person breakdown shown within each category.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Planned vs. Actual</h3>
+      <p>Set monthly budgets per category and instantly see remaining balance with a progress bar.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Smart Alerts</h3>
+      <p>Configure spending thresholds per category and get notified before you overspend.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏷️</div>
+      <h3>Auto-Categorization</h3>
+      <p>The app learns from your choices and auto-categorizes transactions from familiar merchants.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✏️</div>
+      <h3>Manual Transactions</h3>
+      <p>Add cash payments or any expense manually with a date, amount, and category.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Private &amp; Secure</h3>
+      <p>GDPR-compliant. Data stored in EU (Amsterdam). Bank credentials in Azure Key Vault.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💱</div>
+      <h3>Multi-Currency Plans</h3>
+      <p>Set budgets in USD or EUR — converted to UAH automatically using live NBU rates.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Legal links -->
+<div class="legal-links">
+  <a href="privacy.html">🔏 Privacy Policy</a>
+  <a href="delete-account/">🗑️ Delete Account</a>
+  <a href="mailto:defalex808@gmail.com">✉️ Contact Us</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2026 Prostir — Простір &nbsp;·&nbsp; by <a href="/darionyx/">Darionyx</a></p>
+  <p style="margin-top: 6px;">
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="delete-account/">Delete Account</a>
+    <a href="mailto:defalex808@gmail.com">defalex808@gmail.com</a>
+  </p>
+</footer>
+
+</body>
+</html>
